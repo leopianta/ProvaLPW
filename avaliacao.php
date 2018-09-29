@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $aluno = (isset($_POST["aluno"]) && $_POST["aluno"] != null) ? $_POST["aluno"] : "";
     $nota1 = (isset($_POST["nota1"]) && $_POST["nota1"] != null) ? $_POST["nota1"] : "";
     $nota2 = (isset($_POST["nota2"]) && $_POST["nota2"] != null) ? $_POST["nota2"] : "";
-    $nota3 = (isset($_POST["nota3"]) && $_POST["nota3"] != null) ? $_POST["nota3"] : "";
+    $notaFinal = (isset($_POST["notaFinal"]) && $_POST["notaFinal"] != null) ? $_POST["notaFinal"] : "";
 
 } else if (!isset($id)) {
     // Se não se não foi setado nenhum valor para variável $id
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $aluno = NULL;
     $nota1 = NULL;
     $nota2 = NULL;
-    $nota3 = NULL;
+    $notaFinal = NULL;
 
 }
 
@@ -54,7 +54,8 @@ if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
     $nota2 = $resultado->getNota2();
     $notaFinal = $resultado->getNotaFinal();
 }
-if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != "") {
+
+if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save") {
     $avaliacao = new avaliacao($id, $curso, $turma, $aluno, $nota1, $nota2, $notaFinal);
     $msg =$object->salvar($avaliacao);
 

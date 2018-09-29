@@ -33,7 +33,7 @@ class avaliacaoDAO
                 $statement = $pdo->prepare("UPDATE avaliacao SET Curso_idCurso=:curso, Turma_idTurma=:turma, Aluno_idAluno=:aluno,  Nota1=:nota1, Nota2=:nota2, NotaFinal=:notaFinal WHERE idAvaliacao = :id;");
                 $statement->bindValue(":id", $avaliacao->getidAvaliacao());
             } else {
-                $statement = $pdo->prepare("INSERT INTO avaliacao (Curso_idCurso, Turma_idTurma, Aluno_idAluno, Nota1, Nota2, NotaFinal) VALUES (:curso, :turma, :aluno, :Nota1, :Nota2, :NotaFinal )");
+                $statement = $pdo->prepare("INSERT INTO avaliacao (Curso_idCurso, Turma_idTurma, Aluno_idAluno, Nota1, Nota2, NotaFinal) VALUES (:curso, :turma, :aluno, :nota1, :nota2, :notaFinal )");
             }
             $statement->bindValue(":curso",$avaliacao->getCurso());
             $statement->bindValue(":turma",$avaliacao->getTurma());
@@ -78,6 +78,21 @@ class avaliacaoDAO
             return "Erro: ".$erro->getMessage();
         }
     }
+
+    public function Calcular($n1, $n2, $n3){
+
+        $result = "";
+
+        if (($n1 + $n2)/2 >= 7) {
+            $result = "Aprovado";
+            }else if (($n1 + $n2)/2 < 4){
+            $result = "Reprovado";
+        }else if ((($n1 + $n2)/2) + $n3 >= 6){
+            $result = "Aprovado";
+        }
+        echo 'resultado: '.$result;
+    }
+
 
     public function tabelapaginada() {
 
@@ -149,6 +164,7 @@ class avaliacaoDAO
         <th>Nota 1</th>
         <th>Nota 2</th>
         <th>Nota Final</th>
+        <th>Situação</th>
         <th colspan='2'>Ações</th>
        </tr>
      </thead>
@@ -162,6 +178,7 @@ class avaliacaoDAO
         <td>$inst->Nota1</td>
         <td>$inst->Nota2</td>
         <td>$inst->NotaFinal</td>
+        <td>"; echo "<?php Calcular($inst->Nota1, $inst->Nota2, $inst->NotaFinal) ?></td>                       
         <td><a href='?act=upd&id=$inst->idAvaliacao'><i class='ti-reload'></i></a></td>
         <td><a href='?act=del&id=$inst->idAvaliacao'><i class='ti-close'></i></a></td>
        </tr>";
